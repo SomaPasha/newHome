@@ -41,6 +41,8 @@ public class Main {
     }
 
 
+
+
     private static void initMap() {
         map = new char[SIZE][SIZE];
         for (int i = 0; i < SIZE; i++) {
@@ -66,4 +68,32 @@ public class Main {
         System.out.println();
     }
 
+    private static void humanTurn() {
+        int x,y;
+        do {
+            System.out.println("Введитее координаты x,y");
+             x = scanner.nextInt() - 1;
+             y = scanner.nextInt() - 1;
+        }while(!isCellValid(x,y));
+        map[y][x]= DOT_X;
+    }
+
+    private  static  boolean isCellValid(int x,int y){
+        return (x>=0 && x<SIZE) && (y>=0 && y<SIZE) && (map[y][x] ==DOT_EMPTY);
+    }
+
+    private static boolean isWin(char sym) {
+        if(map[0][0]== sym && map[0][1]== sym && map[0][2]== sym) return true;
+        if(map[1][0]== sym && map[1][1]== sym && map[1][2]== sym) return true;
+        if(map[2][0]== sym && map[2][1]== sym && map[2][2]== sym) return true;
+        if(map[0][0]== sym && map[1][0]== sym && map[2][2]== sym) return true;
+        if(map[0][1]== sym && map[1][1]== sym && map[2][2]== sym) return true;
+        if(map[0][2]== sym && map[1][2]== sym && map[2][2]== sym) return true;
+        if(map[0][0]== sym && map[1][1]== sym && map[2][2]== sym) return true;
+        if(map[2][0]== sym && map[1][1]== sym && map[0][2]== sym) return true;
+        return false;
+
+
+
+    }
 }
