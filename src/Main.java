@@ -1,6 +1,15 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
+    private static final int SIZE = 3;
+    private static final int DOTS_TO_WIN= 3;
+    private static final char DOT_EMPTY = '-';
+    private static final char DOT_X = 'X';
+    private static final char DOT_O = 'O';
+    private static char[][] map;
+    private static Scanner scanner = new Scanner(System.in);
+    private static Random random = new Random();
 
     public static void main(String[] args) {
         initMap();
@@ -30,6 +39,6 @@ public class Main {
                 break;
             }
         }
-
+            System.out.println("Игра окончена");
     }
 }
