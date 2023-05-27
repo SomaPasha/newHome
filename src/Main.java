@@ -17,7 +17,7 @@ public class Main {
         while (true) {
             humanTurn();
             writeMap();
-            if (isWin(DOT_X)) {
+            if (is1Win(DOT_X)) {
                 System.out.println("Ура Вы выграли");
                 break;
             }
