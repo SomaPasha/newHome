@@ -14,35 +14,31 @@ public class Main {
     public static void main(String[] args) {
         initMap();
         writeMap();
-        //    while (true){
-        //  humanTurn();
-        writeMap();
-        //if(isWin())
-        // {
-        //  System.out.println("Ура Вы выграли");
-        //    break;
-        //  }
-        //if(isFull)
-        //{
-        //  System.out.println("Ничия");
-        //break;
+        while (true) {
+            humanTurn();
+            writeMap();
+            if (isWin()) {
+                System.out.println("Ура Вы выграли");
+                break;
+            }
+            if (isFull) {
+                System.out.println("Ничия");
+                break;
+            }
+
+            uiTurn();
+            writeMap();
+            if (isWin()) {
+                System.out.println("Выграл исскуственный интелект");
+                break;
+            }
+            if (isFull) {
+                System.out.println("Ничия");
+                break;
+            }
+        }
+        System.out.println("Игра окончена");
     }
-
-    // uiTurn();
-    //writeMap();
-    // if(isWin())
-    //     {
-    //       System.out.println("Выграл исскуственный интелект");
-    //     break;
-//}
-           // if(isFull)
-         //   {
-          //      System.out.println("Ничия");
-            //    break;
-            //}
-       // }
-     //       System.out.println("Игра окончена");
-
 
 
     private static void initMap() {
