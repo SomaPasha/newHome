@@ -17,7 +17,7 @@ public class Main {
         while (true) {
             humanTurn();
             writeMap();
-            if (is1Win(DOT_X)) {
+            if (isWin(DOT_X)) {
                 System.out.println("Ура Вы выграли");
                 break;
             }
@@ -32,7 +32,7 @@ public class Main {
                 System.out.println("Выграл исскуственный интелект");
                 break;
             }
-            if (isFull() ){
+            if (isFull()) {
                 System.out.println("Ничия");
                 break;
             }
@@ -41,13 +41,11 @@ public class Main {
     }
 
 
-
-
     private static void initMap() {
         map = new char[SIZE][SIZE];
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                map[i][j]=DOT_EMPTY;
+                map[i][j] = DOT_EMPTY;
             }
         }
     }
@@ -55,13 +53,13 @@ public class Main {
     private static void writeMap() {
         System.out.print(" ");
         for (int i = 0; i < SIZE; i++) {
-            System.out.print(" "+(i+1));
+            System.out.print(" " + (i + 1));
         }
         System.out.println();
         for (int i = 0; i < SIZE; i++) {
-            System.out.print(i+1+" ");
+            System.out.print(i + 1 + " ");
             for (int j = 0; j < SIZE; j++) {
-                System.out.print(map[i][j]+" ");
+                System.out.print(map[i][j] + " ");
             }
             System.out.println();
         }
@@ -69,48 +67,72 @@ public class Main {
     }
 
     private static void humanTurn() {
-        int x,y;
+        int x, y;
         do {
             System.out.println("Введитее координаты x,y");
-             x = scanner.nextInt() - 1;
-             y = scanner.nextInt() - 1;
-        }while(!isCellValid(x,y));
-        map[y][x]= DOT_X;
+            x = scanner.nextInt() - 1;
+            y = scanner.nextInt() - 1;
+        } while (!isCellValid(x, y));
+        map[y][x] = DOT_X;
     }
 
-    private  static  boolean isCellValid(int x,int y){
-        return (x>=0 && x<SIZE) && (y>=0 && y<SIZE) && (map[y][x] ==DOT_EMPTY);
+    private static boolean isCellValid(int x, int y) {
+        return (x >= 0 && x < SIZE) && (y >= 0 && y < SIZE) && (map[y][x] == DOT_EMPTY);
     }
 
     private static boolean isWin(char sym) {
-        if(map[0][0]== sym && map[0][1]== sym && map[0][2]== sym) return true;
-        if(map[1][0]== sym && map[1][1]== sym && map[1][2]== sym) return true;
-        if(map[2][0]== sym && map[2][1]== sym && map[2][2]== sym) return true;
-        if(map[0][0]== sym && map[1][0]== sym && map[2][2]== sym) return true;
-        if(map[0][1]== sym && map[1][1]== sym && map[2][2]== sym) return true;
-        if(map[0][2]== sym && map[1][2]== sym && map[2][2]== sym) return true;
-        if(map[0][0]== sym && map[1][1]== sym && map[2][2]== sym) return true;
-        if(map[2][0]== sym && map[1][1]== sym && map[0][2]== sym) return true;
+       if(checkWinHorizontal(sym) || (checkWinVertical(sym))) {return true;}
         return false;
     }
 
     private static boolean isFull() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-             if (map[i][j]==DOT_EMPTY) {
-             return false;
-             }
+                if (map[i][j] == DOT_EMPTY) {
+                    return false;
+                }
             }
-            }
-        return true;
         }
+        return true;
+    }
 
     private static void uiTurn() {
-        int x,y;
+        int x, y;
         do {
             x = random.nextInt(SIZE);
             y = random.nextInt(SIZE);
-        }while(!isCellValid(x,y));
-        map[y][x]= DOT_O;
+        } while (!isCellValid(x, y));
+        map[y][x] = DOT_O;
+    }
+
+    private static boolean checkWinHorizontal(char ch) {
+        int k;
+        for (int i = 0; i < SIZE; i++) {
+            k = 0;
+            for (int j = 0; j < SIZE; j++) {
+                if (map[i][j] == ch) {
+                    k++;
+                }
+                if (k == SIZE) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    private static boolean checkWinVertical(char ch) {
+        int k;
+        for (int i = 0; i < SIZE; i++) {
+            k = 0;
+            for (int j = 0; j < SIZE; j++) {
+                if (map[j][i] == ch) {
+                    k++;
+                }
+                if (k == SIZE) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
