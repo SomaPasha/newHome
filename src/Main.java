@@ -17,7 +17,7 @@ public class Main {
         while (true) {
             humanTurn();
             writeMap();
-            if (isWin()) {
+            if (isWin(DOT_X)) {
                 System.out.println("Ура Вы выграли");
                 break;
             }
@@ -28,7 +28,7 @@ public class Main {
 
             uiTurn();
             writeMap();
-            if (isWin()) {
+            if (isWin(DOT_O)) {
                 System.out.println("Выграл исскуственный интелект");
                 break;
             }
