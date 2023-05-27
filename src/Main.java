@@ -32,7 +32,7 @@ public class Main {
                 System.out.println("Выграл исскуственный интелект");
                 break;
             }
-            if (isFull) {
+            if (isFull() ){
                 System.out.println("Ничия");
                 break;
             }
@@ -93,6 +93,7 @@ public class Main {
         if(map[2][0]== sym && map[1][1]== sym && map[0][2]== sym) return true;
         return false;
     }
+
     private static boolean isFull() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
@@ -103,4 +104,13 @@ public class Main {
             }
         return true;
         }
+
+    private static void uiTurn() {
+        int x,y;
+        do {
+            x = random.nextInt(SIZE);
+            y = random.nextInt(SIZE);
+        }while(!isCellValid(x,y));
+        map[y][x]= DOT_O;
+    }
 }
