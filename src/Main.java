@@ -21,8 +21,8 @@ public class Main {
                 System.out.println("Ура Вы выграли");
                 break;
             }
-            if (isFull) {
-                System.out.println("Ничия");
+            if (isFull()) {
+                System.out.println("Ньчия");
                 break;
             }
 
@@ -92,8 +92,15 @@ public class Main {
         if(map[0][0]== sym && map[1][1]== sym && map[2][2]== sym) return true;
         if(map[2][0]== sym && map[1][1]== sym && map[0][2]== sym) return true;
         return false;
-
-
-
     }
+    private static boolean isFull() {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+             if (map[i][j]==DOT_EMPTY) {
+             return false;
+             }
+            }
+            }
+        return true;
+        }
 }
