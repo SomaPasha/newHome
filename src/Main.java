@@ -2,8 +2,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-    private static final int SIZE = 3;
-    private static final int DOTS_TO_WIN = 3;
+    private static final int SIZE = 4;
+    private static final int DOTS_TO_WIN = 4;
     private static final char DOT_EMPTY = '-';
     private static final char DOT_X = 'X';
     private static final char DOT_O = 'O';
@@ -81,7 +81,7 @@ public class Main {
     }
 
     private static boolean isWin(char sym) {
-       if(checkWinHorizontal(sym) || (checkWinVertical(sym))) {return true;}
+       if(checkWinHorizontal(sym) || (checkWinVertical(sym)) ||(checkWinDiog(sym))) {return true;}
         return false;
     }
 
@@ -97,12 +97,87 @@ public class Main {
     }
 
     private static void uiTurn() {
-        int x, y;
+        int x = 0, y=0 ;
+
+       int k=0;
+        int[] cord= new int[2];
         do {
-            x = random.nextInt(SIZE);
-            y = random.nextInt(SIZE);
+
+
+            for (int i = 0; i < SIZE; i++) {
+                for (int j = 0; j < SIZE; j++) {
+                   if(map[i][j] == DOT_X){
+                      cord = checkNine(i,j);
+                       y=cord[0];
+                       x=cord[1];
+                   }
+                }
+            }
+            k++;
+            if(k>100){
+               x =random.nextInt(SIZE);
+               y =random.nextInt(SIZE);
+            }
         } while (!isCellValid(x, y));
         map[y][x] = DOT_O;
+    }
+
+    private static int[] checkNine(int i, int j) {
+        int[] in = new int[2];
+        in[0]=-1;
+        in[1]=-1;
+        if(j+2>=0 && j+2<SIZE){
+        if (map[i][j+1]==DOT_X){ in[0]=i; in[1]=j+2;}
+        }
+        if(j-2>=0 && j-2<SIZE) {
+            if (map[i][j - 1] == DOT_X) {
+                in[0] = i;
+                in[1] = j - 2;
+            }
+        }
+            if(i+2>=0 && i+2<SIZE) {
+                if (map[i + 1][j] == DOT_X) {
+                    in[0] = i + 2;
+                    in[1] = j;
+                }
+            }
+                if(i-2>=0 && i-2<SIZE) {
+                    if (map[i - 1][j] == DOT_X) {
+                        in[0] = i - 2;
+                        in[1] = j;
+                    }
+                }
+                    if((i+2>=0 && i+2<SIZE) && (j+2>=0 && j+2<SIZE)){
+                        if (map[i + 1][j + 1] == DOT_X) {
+                            in[0] = i + 2;
+                            in[1] = j + 2;
+                        }
+                    }
+        if((i-2>=0 && i-2<SIZE) && (j-2>=0 && j-2<SIZE)) {
+            if (map[i - 1][j - 1] == DOT_X) {
+                in[0] = i - 2;
+                in[1] = j - 2;
+            }
+        }
+        if((i+2>=0 && i+2<SIZE) && (j-2>=0 && j-2<SIZE)) {
+            if (map[i + 1][j - 1] == DOT_X) {
+                in[0] = i + 2;
+                in[1] = j - 2;
+            }
+        }
+        if((i-2>=0 && i-2<SIZE) && (j+2>=0 && j+2<SIZE)) {
+            if (map[i - 1][j + 1] == DOT_X) {
+                in[0] = i - 2;
+                in[1] = j + 2;
+            }
+        }
+        if((in[0]==-1) || (in[1]==-1)){
+            in[0] =random.nextInt(SIZE);
+            in[1] =random.nextInt(SIZE);
+        }
+
+        return in;
+
     }
 
     private static boolean checkWinHorizontal(char ch) {
@@ -113,13 +188,14 @@ public class Main {
                 if (map[i][j] == ch) {
                     k++;
                 }
-                if (k == SIZE) {
+                if (k == DOTS_TO_WIN) {
                     return true;
                 }
             }
         }
         return false;
     }
+
     private static boolean checkWinVertical(char ch) {
         int k;
         for (int i = 0; i < SIZE; i++) {
@@ -128,11 +204,58 @@ public class Main {
                 if (map[j][i] == ch) {
                     k++;
                 }
-                if (k == SIZE) {
+                if (k == DOTS_TO_WIN) {
                     return true;
                 }
             }
         }
         return false;
     }
+
+    private static boolean checkWinDiog(char ch) {
+        for (int i = 0; i <SIZE ; i++) {
+           if (provLeft(ch,i,0)) {return true;}
+            if (provRight(ch,0,i)) {return true;}
+        }
+        return false;
+
+    }
+
+    private static boolean provRight(char ch, int x,int y) {
+        int k=0;
+        while (x<SIZE|| y<SIZE){
+            if((x>=0 && x<SIZE) && (y>=0 && y<SIZE)){
+                if(map[x][y]==ch){
+                    k++;
+                }
+            } else {
+                break;
+            }
+            x++;
+            y++;
+
+        }
+        if (k==DOTS_TO_WIN) { return true;}
+        return false;
+    }
+
+    private static boolean provLeft(char ch, int x,int y) {
+        int k=0;
+        while (x<SIZE|| y<SIZE){
+            if((x>=0 && x<SIZE) && (y>=0 && y<SIZE)){
+                if(map[x][y]==ch){
+                    k++;
+                }
+            } else {
+                break;
+            }
+            x--;
+            y++;
+
+        }
+        if (k==DOTS_TO_WIN) { return true;}
+        return false;
+    }
+
+
 }
